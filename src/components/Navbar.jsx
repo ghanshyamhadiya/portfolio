@@ -232,7 +232,7 @@ const Navbar = () => {
             animate="open"
             exit="closed"
           >
-            <div className="flex flex-col space-y-4 mt-8 gap-5 ">
+            <div className="flex items-center flex-col space-y-4 mt-8 gap-5 ">
               {navLinks.map(({ href, label }) => (
                 <motion.div // Wrap Link with motion.div for animations
                   key={href}
