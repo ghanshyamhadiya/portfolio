@@ -27,11 +27,8 @@ const Navbar = () => {
     visible: {
       y: 0,
       opacity: 1,
-      transition: {
-        duration: 0.5,
-        ease: [0.22, 1, 0.36, 1]
-      }
-    }
+      transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+    },
   };
 
   const mobileMenuVariants = {
@@ -40,28 +37,28 @@ const Navbar = () => {
       opacity: 0,
       transition: {
         duration: 0.4,
-        ease: "easeInOut",
-        when: "afterChildren",
+        ease: 'easeInOut',
+        when: 'afterChildren',
         staggerChildren: 0.05,
-        staggerDirection: -1
-      }
+        staggerDirection: -1,
+      },
     },
     open: {
       y: '0%',
       opacity: 1,
       transition: {
         duration: 0.5,
-        ease: "easeOut",
-        when: "beforeChildren",
+        ease: 'easeOut',
+        when: 'beforeChildren',
         staggerChildren: 0.1,
-        delayChildren: 0.1
-      }
-    }
+        delayChildren: 0.1,
+      },
+    },
   };
 
   const menuItemVariants = {
     closed: { y: 20, opacity: 0 },
-    open: { y: 0, opacity: 1 }
+    open: { y: 0, opacity: 1 },
   };
 
   const handleScroll = useCallback(() => {
@@ -80,19 +77,17 @@ const Navbar = () => {
   useEffect(() => {
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, [handleScroll]);
 
   return (
     <>
       <motion.nav
-        className={`fixed w-full z-50 transition-all duration-500 ${scrolled
-          ? 'bg-gray-950/90 backdrop-blur-sm py-3 shadow-lg shadow-black/30'
-          : 'bg-transparent py-5'
-          }`}
+        className={`fixed w-full z-50 transition-all duration-500 ${
+          scrolled
+            ? 'bg-gray-950/90 backdrop-blur-sm py-3 shadow-lg shadow-black/30'
+            : 'bg-transparent py-5'
+        }`}
         variants={navbarVariants}
         initial="hidden"
         animate="visible"
@@ -115,24 +110,21 @@ const Navbar = () => {
           <div className="hidden md:flex items-center">
             <div className="flex space-x-6 mr-6">
               {navLinks.map((link) => (
-                <motion.div
-                  key={link.href}
-                  whileHover={{ y: -2 }}
-                  transition={{ duration: 0.2 }}
-                >
+                <motion.div key={link.href} whileHover={{ y: -2 }} transition={{ duration: 0.2 }}>
                   <Link
                     to={link.href}
-                    className={`relative py-2 px-1 text-base font-medium transition-colors ${activePath === link.href
-                      ? 'text-yellow-400'
-                      : 'text-gray-300 hover:text-white'
-                      }`}
+                    className={`relative py-2 px-1 text-base font-medium transition-colors ${
+                      activePath === link.href
+                        ? 'text-yellow-400'
+                        : 'text-gray-300 hover:text-white'
+                    }`}
                   >
                     {link.label}
                     {activePath === link.href && (
                       <motion.div
                         className="absolute bottom-0 left-0 w-full h-0.5 bg-yellow-400"
                         layoutId="activeNavSection"
-                        transition={{ duration: 0.3, type: "spring", stiffness: 380, damping: 30 }}
+                        transition={{ duration: 0.3, type: 'spring', stiffness: 380, damping: 30 }}
                       />
                     )}
                   </Link>
@@ -161,9 +153,9 @@ const Navbar = () => {
         </div>
       </motion.nav>
 
-      {/* Mobile Navigation */}
+      {/* Mobile Navigation (bottom menu style) */}
       <AnimatePresence>
-        {isOpen && (
+        
           <motion.div
             className="md:hidden fixed bottom-[5%] left-1/2 -translate-x-1/2 w-[90%] rounded-xl z-40 bg-gray-950/90 backdrop-blur-sm shadow-2xl shadow-black/50 p-4 border border-white/10"
             variants={mobileMenuVariants}
@@ -176,10 +168,9 @@ const Navbar = () => {
                 <motion.div key={href} variants={menuItemVariants}>
                   <Link
                     to={href}
-                    className={`flex flex-col items-center text-sm font-medium transition-colors ${activePath === href
-                      ? 'text-yellow-400'
-                      : 'text-gray-400 hover:text-white'
-                      }`}
+                    className={`flex flex-col items-center text-sm font-medium transition-colors ${
+                      activePath === href ? 'text-yellow-400' : 'text-gray-400 hover:text-white'
+                    }`}
                     onClick={() => setIsOpen(false)}
                   >
                     <span>{label}</span>
@@ -188,7 +179,7 @@ const Navbar = () => {
               ))}
             </div>
           </motion.div>
-        )}
+        
       </AnimatePresence>
     </>
   );
