@@ -1,15 +1,15 @@
 import React, { useState, memo, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { HiOutlineCode, HiOutlineMail } from 'react-icons/hi'; // Changed from 'react-icons/fi' to 'react-icons/hi'
+import { HiOutlineCode, HiOutlineMail } from 'react-icons/hi';
+import { FiGithub, FiLinkedin } from 'react-icons/fi';
 
-// Memoized SocialButton for consistency with Hero section
 const SocialButton = memo(({ icon, href, label, color, bg }) => (
   <motion.a
     href={href}
     target="_blank"
     rel="noopener noreferrer"
     className={`text-gray-300 w-10 h-10 rounded-full flex items-center justify-center border border-gray-700/50 backdrop-blur-sm transition-all duration-300 ${color} ${bg}`}
-    whileHover={{ scale: 1.05, y: -3 }} // Slightly less lift for compactness
+    whileHover={{ scale: 1.05, y: -3 }}
     whileTap={{ scale: 0.95 }}
     transition={{ duration: 0.1 }}
     aria-label={label}
@@ -24,18 +24,25 @@ const Footer = () => {
 
   const socialLinks = useMemo(() => [
     {
-      icon: <HiOutlineCode size={18} />, // Using HiOutlineCode as a generic code/GitHub icon
+      icon: <FiGithub size={18} />,
       href: 'https://github.com/ghanshyamhadiya',
       label: 'GitHub',
-      color: "hover:text-indigo-400",
-      bg: "hover:bg-indigo-900/50"
+      color: "hover:text-yellow-400",
+      bg: "hover:bg-gray-800"
     },
     {
-      icon: <HiOutlineMail size={18} />, // Using HiOutlineMail
+      icon: <FiLinkedin size={18} />,
+      href: 'https://www.linkedin.com/in/ghanshyam-hadiya-13971b2bb',
+      label: 'LinkedIn',
+      color: "hover:text-yellow-400",
+      bg: "hover:bg-gray-800"
+    },
+    {
+      icon: <HiOutlineMail size={18} />,
       href: 'mailto:ghanshyamhadiya013@gmail.com',
       label: 'Email',
-      color: "hover:text-purple-400",
-      bg: "hover:bg-purple-900/50"
+      color: "hover:text-yellow-400",
+      bg: "hover:bg-gray-800"
     }
   ], []);
 
@@ -57,16 +64,15 @@ const Footer = () => {
 
   return (
     <motion.footer
-      className="bg-gray-900 py-8 relative overflow-hidden font-inter"
+      className="bg-gray-950 py-8 relative overflow-hidden font-inter"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true }}
       variants={footerVariants}
     >
-      {/* Subtle background glow/gradient effects like Hero */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-1/2 h-1/2 rounded-full bg-indigo-600/10 filter blur-[80px]" />
-        <div className="absolute bottom-1/3 right-1/4 w-1/3 h-1/3 rounded-full bg-purple-600/10 filter blur-[80px]" />
+        <div className="absolute top-1/4 left-1/4 w-1/2 h-1/2 rounded-full bg-white/5 filter blur-[80px]" />
+        <div className="absolute bottom-1/3 right-1/4 w-1/3 h-1/3 rounded-full bg-yellow-400/5 filter blur-[80px]" />
       </div>
 
       <div className="container mx-auto px-4 md:px-6 relative z-10">
@@ -75,7 +81,7 @@ const Footer = () => {
           variants={itemVariants}
         >
           <motion.h2
-            className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400 mb-2 inline-block"
+            className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-white mb-2 inline-block"
             whileHover={{ scale: 1.03 }}
           >
             Ghanshyam Hadiya
@@ -106,7 +112,7 @@ const Footer = () => {
               <AnimatePresence>
                 {hoveredIndex === index && (
                   <motion.div
-                    className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs py-0.5 px-2 rounded-md whitespace-nowrap shadow-lg"
+                    className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-white text-gray-900 text-xs py-0.5 px-2 rounded-md whitespace-nowrap shadow-lg"
                     initial={{ opacity: 0, y: 5 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 2 }}

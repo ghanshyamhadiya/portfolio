@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, Phone, MapPin, Send, ArrowRight, Check, X, Code } from 'lucide-react'; // Switched to lucide-react for icons
+import { Mail, Phone, MapPin, Send, ArrowRight, Check, X } from 'lucide-react';
 
 // Custom Button component (kept for self-contained example)
 const Button = memo(({ children, primary, className, onClick, type, disabled }) => {
@@ -31,7 +31,7 @@ const StatusMessage = memo(({ status, message, onClose }) => {
   const borderColor = isSuccess ? 'border-green-500/30' : 'border-red-500/30';
   const textColor = isSuccess ? 'text-green-300' : 'text-red-300';
   const iconBgColor = isSuccess ? 'bg-green-500' : 'bg-red-500';
-  const Icon = isSuccess ? Check : X; // Using Lucide Check and X
+  const Icon = isSuccess ? Check : X;
 
   return (
     <motion.div
@@ -48,7 +48,7 @@ const StatusMessage = memo(({ status, message, onClose }) => {
         {message}
       </p>
       <button onClick={onClose} className="absolute top-2 right-2 text-gray-400 hover:text-white transition-colors">
-        <X size={16} /> {/* Using Lucide X */}
+        <X size={16} />
       </button>
     </motion.div>
   );
@@ -64,14 +64,11 @@ const Contact = () => {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null); // 'success' or 'error'
+  const [submitStatus, setSubmitStatus] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
 
-  // Dummy emailjs init to avoid runtime error in Canvas without actual EmailJS setup
-  // In a real application, replace this with your actual emailjs.init('YOUR_PUBLIC_KEY');
   useEffect(() => {
     console.log("EmailJS would be initialized here in a real app.");
-    // emailjs.init('BpiqXCZe24GyY1hc9'); // Uncomment and use your public key
   }, []);
 
   const handleChange = (e) => {
@@ -86,7 +83,7 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
     setErrorMessage('');
-    setSubmitStatus(null); // Clear previous status
+    setSubmitStatus(null);
 
     const templateParams = {
       name: formData.name,
@@ -96,12 +93,10 @@ const Contact = () => {
     };
 
     try {
-      // Simulate EmailJS send or replace with actual EmailJS call
-      // await emailjs.send('service_qig13fs', 'template_huvdi7a', templateParams, 'BpiqXCZe24GyY1hc9');
-      await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate network delay
+      await new Promise(resolve => setTimeout(resolve, 1500));
       
       setSubmitStatus('success');
-      setFormData({ name: '', email: '', subject: '', message: '' }); // Reset form
+      setFormData({ name: '', email: '', subject: '', message: '' });
 
     } catch (error) {
       console.error('Failed to send email:', error);
@@ -109,7 +104,6 @@ const Contact = () => {
       setErrorMessage('Failed to send your message. Please try again later.');
     } finally {
       setIsSubmitting(false);
-      // Automatically clear status message after a few seconds
       setTimeout(() => {
         setSubmitStatus(null);
         setErrorMessage('');
@@ -117,8 +111,7 @@ const Contact = () => {
     }
   };
 
-  // Animation variants
-  const sectionVariants = {
+  const containerVariants = {
     hidden: { opacity: 0, y: 50 },
     visible: {
       opacity: 1,
@@ -138,9 +131,8 @@ const Contact = () => {
   };
 
   const staggerChildren = {
-    hidden: { opacity: 0 },
+    hidden: {},
     visible: {
-      opacity: 1,
       transition: {
         staggerChildren: 0.1,
         delayChildren: 0.3
@@ -149,21 +141,19 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="relative py-16 md:py-20 bg-gray-900 text-gray-100 overflow-hidden font-inter">
-      {/* Background elements for subtle glow and pattern */}
+    <section id="contact" className="relative py-16 md:py-24 bg-gray-950 text-gray-100 overflow-hidden font-inter">
+      {/* Consistent Background - Start */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-1/4 left-1/4 w-1/2 h-1/2 rounded-full bg-indigo-600/10 filter blur-[120px]" />
-        <div className="absolute bottom-1/3 right-1/4 w-1/3 h-1/3 rounded-full bg-purple-600/10 filter blur-[120px]" />
+        {/* Subtle, consistent radial gradients */}
+        <div className="absolute -top-1/4 -left-1/4 w-1/2 h-1/2 rounded-full bg-purple-600/10 filter blur-[100px]" />
+        <div className="absolute -bottom-1/4 -right-1/4 w-1/2 h-1/2 rounded-full bg-indigo-600/10 filter blur-[100px]" />
+        {/* Unified dot pattern */}
         <div className="absolute inset-0" style={{
-          backgroundImage: `linear-gradient(rgba(99, 102, 241, 0.05) 1px, transparent 1px),
-                           linear-gradient(90deg, rgba(99, 102, 241, 0.05) 1px, transparent 1px)`,
-          backgroundSize: '60px 60px',
-          backgroundPosition: '-20px -20px',
-          opacity: 0.1,
-          transform: 'perspective(1000px) rotateX(20deg) translateY(-50px)', // Less aggressive perspective
-          transformOrigin: 'center top'
+          backgroundImage: `radial-gradient(circle, rgba(99, 102, 241, 0.05) 1px, transparent 1px)`,
+          backgroundSize: '30px 30px',
         }} />
       </div>
+      {/* Consistent Background - End */}
 
       <div className="container mt-8 mx-auto px-4 md:px-6 relative z-10">
         <motion.div
@@ -185,13 +175,10 @@ const Contact = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          variants={sectionVariants}
+          variants={containerVariants}
         >
           {/* Left Column: Send Message Form */}
-          <motion.div
-            className="p-4 md:p-6"
-            variants={staggerChildren}
-          >
+          <motion.div className="p-4 md:p-6" variants={staggerChildren}>
             <motion.h3
               className="text-2xl font-bold text-white mb-6"
               variants={fadeInUp}
@@ -211,7 +198,6 @@ const Contact = () => {
                   className="w-full px-5 py-3 bg-gray-900/50 border border-gray-700/50 text-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all duration-300 placeholder-gray-500"
                 />
               </motion.div>
-
               <motion.div variants={fadeInUp}>
                 <input
                   type="email"
@@ -223,7 +209,6 @@ const Contact = () => {
                   className="w-full px-5 py-3 bg-gray-900/50 border border-gray-700/50 text-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all duration-300 placeholder-gray-500"
                 />
               </motion.div>
-
               <motion.div variants={fadeInUp}>
                 <input
                   type="text"
@@ -235,7 +220,6 @@ const Contact = () => {
                   className="w-full px-5 py-3 bg-gray-900/50 border border-gray-700/50 text-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all duration-300 placeholder-gray-500"
                 />
               </motion.div>
-
               <motion.div variants={fadeInUp}>
                 <textarea
                   name="message"
@@ -243,11 +227,10 @@ const Contact = () => {
                   onChange={handleChange}
                   placeholder="Your Message"
                   required
-                  rows={5} // Adjusted rows for compactness
+                  rows={5}
                   className="w-full px-5 py-3 bg-gray-900/50 border border-gray-700/50 text-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all duration-300 placeholder-gray-500 resize-none"
                 ></textarea>
               </motion.div>
-
               <motion.div variants={fadeInUp}>
                 <Button
                   type="submit"
@@ -265,12 +248,11 @@ const Contact = () => {
                     </div>
                   ) : (
                     <>
-                      Send Message <Send className="ml-1 rotate-90" /> {/* Using Lucide Send */}
+                      Send Message <Send className="ml-1 rotate-90" />
                     </>
                   )}
                 </Button>
               </motion.div>
-
               <AnimatePresence>
                 {submitStatus && (
                   <StatusMessage
@@ -285,28 +267,27 @@ const Contact = () => {
 
           {/* Right Column: Let's Connect */}
           <motion.div
-            className="relative overflow-hidden rounded-xl hidden md:flex flex-col items-center justify-center p-8 md:p-12 text-center bg-gradient-to-br from-purple-900/40 to-indigo-900/40" // Applied gradient directly
-            variants={fadeInUp} // Changed from fadeInLeft for consistency in animations
+            className="relative overflow-hidden rounded-xl hidden md:flex flex-col items-center justify-center p-8 md:p-12 text-center bg-gradient-to-br from-purple-900/40 to-indigo-900/40"
+            variants={fadeInUp}
           >
-            {/* Abstract animated background elements */}
             <div className="absolute inset-0 z-0">
               {Array.from({ length: 5 }).map((_, i) => (
                 <motion.div
                   key={i}
-                  className="absolute rounded-full bg-gradient-to-r from-purple-600/10 to-indigo-600/10" // Reduced opacity for subtlety
+                  className="absolute rounded-full bg-gradient-to-r from-purple-600/10 to-indigo-600/10"
                   style={{
-                    width: Math.random() * 200 + 80, // Smaller elements
+                    width: Math.random() * 200 + 80,
                     height: Math.random() * 200 + 80,
                     left: `${Math.random() * 100}%`,
                     top: `${Math.random() * 100}%`,
                     transform: 'translate(-50%, -50%)',
                   }}
                   animate={{
-                    scale: [1, 1.1, 1], // Less aggressive scale
-                    opacity: [0.1, 0.05, 0.1], // Even more subtle opacity changes
+                    scale: [1, 1.1, 1],
+                    opacity: [0.1, 0.05, 0.1],
                   }}
                   transition={{
-                    duration: Math.random() * 8 + 8, // Slightly faster movement
+                    duration: Math.random() * 8 + 8,
                     repeat: Infinity,
                     repeatType: "reverse",
                     delay: Math.random() * 2
@@ -329,7 +310,6 @@ const Contact = () => {
                 something, feel free to reach out.
               </p>
 
-              {/* Contact Info Items (Simplified & Prominent) */}
               <div className="space-y-4 mb-8">
                 <motion.a
                   href="mailto:ghanshyamhadiya013@gmail.com"
@@ -337,24 +317,12 @@ const Contact = () => {
                   variants={fadeInUp}
                   whileHover={{ x: 5 }}
                 >
-                  <Mail size={24} className="text-purple-400 group-hover:scale-110 transition-transform" /> {/* Using Lucide Mail */}
+                  <Mail size={24} className="text-purple-400 group-hover:scale-110 transition-transform" />
                   <span>ghanshyamhadiya013@gmail.com</span>
-                  <ArrowRight size={20} className="ml-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" /> {/* Using Lucide ArrowRight */}
+                  <ArrowRight size={20} className="ml-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
                 </motion.a>
-                {/* Add other contact info if needed here, e.g., phone, location */}
-                {/* Example for Phone (if desired): */}
-                {/*
-                <motion.div
-                  className="flex items-center justify-center gap-3 text-lg text-indigo-300"
-                  variants={fadeInUp}
-                >
-                  <Phone size={24} className="text-indigo-400" />
-                  <span>+91 12345 67890</span>
-                </motion.div>
-                */}
               </div>
 
-              {/* Animated icon (kept and refined) */}
               <motion.div
                 className="inline-block"
                 whileHover={{ scale: 1.05 }}

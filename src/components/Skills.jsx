@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   FileCode2, Palette, SquareCode, Atom, GitFork,
-  Server, Rocket, Database, Send, Package, Grid // Changed from LayoutPanel to Grid
+  Server, Rocket, Database, Send, Package, Grid
 } from 'lucide-react';
-// Removed import { GiBootStomp } from 'react-icons/gi'; as it was causing issues.
 
 const Skills = () => {
   const [activeFilter, setActiveFilter] = useState('all');
@@ -38,11 +37,11 @@ const Skills = () => {
     },
     exit: { opacity: 0, y: -20, scale: 0.9, transition: { duration: 0.2 } },
     hover: {
-      y: -5, // Slightly less lift on hover
-      boxShadow: '0 8px 20px -4px rgba(99, 102, 241, 0.3)', // Reduced shadow intensity
+      y: -5,
+      boxShadow: '0 8px 20px -4px rgba(99, 102, 241, 0.3)',
       borderColor: '#8B5CF6',
-      scale: 1.03, // Slightly less scale
-      rotate: 1 // Reduced rotation
+      scale: 1.03,
+      rotate: 1
     }
   };
 
@@ -53,7 +52,7 @@ const Skills = () => {
     { name: 'React', icon: <Atom className="text-4xl sm:text-5xl text-[#61DAFB]" />, category: 'frontend' },
     { name: 'Redux', icon: <GitFork className="text-4xl sm:text-5xl text-[#764ABC]" />, category: 'frontend' },
     { name: 'Tailwind CSS', icon: <Palette className="text-4xl sm:text-5xl text-[#06B6D4]" />, category: 'frontend' },
-    { name: 'Bootstrap', icon: <Grid className="text-4xl sm:text-5xl text-[#563D7C]" />, category: 'frontend' }, // Changed to Grid icon
+    { name: 'Bootstrap', icon: <Grid className="text-4xl sm:text-5xl text-[#563D7C]" />, category: 'frontend' },
   ];
 
   const backendSkills = [
@@ -78,14 +77,19 @@ const Skills = () => {
   };
 
   return (
-    <section id="skills" className="py-16 sm:py-20 md:py-24 bg-gray-900 relative">
-      <div className="absolute inset-0 bg-gray-900 pointer-events-none"></div>
-      <div className="absolute inset-0 opacity-5">
-        <div className="h-full w-full" style={{
-          backgroundImage: 'radial-gradient(circle, rgba(99, 102, 241, 0.8) 1px, transparent 1px)',
-          backgroundSize: '30px 30px'
-        }}></div>
+    <section id="skills" className="py-16 sm:py-20 md:py-24 bg-gray-950 relative">
+      {/* Consistent Background - Start */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        {/* Subtle, consistent radial gradients */}
+        <div className="absolute -top-1/4 -left-1/4 w-1/2 h-1/2 rounded-full bg-purple-600/10 filter blur-[100px]" />
+        <div className="absolute -bottom-1/4 -right-1/4 w-1/2 h-1/2 rounded-full bg-indigo-600/10 filter blur-[100px]" />
+        {/* Unified dot pattern */}
+        <div className="absolute inset-0" style={{
+          backgroundImage: `radial-gradient(circle, rgba(99, 102, 241, 0.05) 1px, transparent 1px)`,
+          backgroundSize: '30px 30px',
+        }} />
       </div>
+      {/* Consistent Background - End */}
 
       <div className="container mt-9 mx-auto px-4 md:px-6 relative z-10">
         <motion.div
@@ -124,28 +128,32 @@ const Skills = () => {
           </motion.p>
         </motion.div>
 
+{/* Filter Buttons */}
         <motion.div
-          className="flex justify-center mb-10 sm:mb-12 flex-wrap gap-2 sm:gap-3"
-          initial={{ opacity: 0, y: 20 }}
+          className="flex justify-center mb-12 sm:mb-16"
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.3 }}
+          transition={{ delay: 0.4, duration: 0.6 }}
         >
-          {skillCategories.map(category => (
-            <motion.button
-              key={category.id}
-              onClick={() => setActiveFilter(category.id)}
-              className={`px-4 py-2 rounded-full text-sm md:text-base transition-all duration-300 ${
-                activeFilter === category.id
-                  ? 'bg-indigo-600 text-white font-semibold'
-                  : 'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-gray-200 border border-gray-700'
-              }`}
-              whileHover={{ scale: 1.05, backgroundColor: activeFilter !== category.id ? '#374151' : undefined }}
-              whileTap={{ scale: 0.95 }}
-            >
-              {category.label}
-            </motion.button>
-          ))}
+          <div className="flex flex-wrap gap-2 sm:gap-3 p-2 bg-gray-900/50 backdrop-blur-lg rounded-2xl border border-gray-800/50">
+            {skillCategories.map((category) => (
+              <motion.button
+                key={category.id}
+                onClick={() => setActiveFilter(category.id)}
+                className={`flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 rounded-xl font-medium transition-all duration-300 ${
+                  activeFilter === category.id
+                    ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg shadow-indigo-500/25'
+                    : 'text-gray-400 hover:text-white hover:bg-gray-800/50'
+                }`}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                {category.icon}
+                <span className="text-sm sm:text-base">{category.label}</span>
+              </motion.button>
+            ))}
+          </div>
         </motion.div>
 
         <div className="mb-12">
@@ -195,7 +203,7 @@ const Skills = () => {
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.7, ease: 'easeOut' }}
         >
-          <h3 className="text-2xl sm:text-3xl font-bold text-white mb-6 text-center bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(to right, #ec4899, #8b5cf6)' }}>My Learning Journey</h3>
+          <h3 className="text-2xl sm:text-3xl font-bold mb-6 text-center bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(to right, #ec4899, #8b5cf6)' }}>My Learning Journey</h3>
           <div className="flex flex-col md:flex-row justify-around items-center gap-6">
             <div className="flex-1 flex flex-col items-center p-4 border border-gray-700 rounded-lg bg-gray-800/50 hover:bg-gray-700/60 transition-colors duration-300 transform hover:scale-105">
               <div className="text-indigo-400 text-4xl sm:text-5xl font-bold mb-2">1+</div>

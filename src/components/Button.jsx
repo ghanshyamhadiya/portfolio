@@ -7,17 +7,15 @@ const Button = memo(({
   primary = true,
   onClick,
   className = '',
-  to, // React Router 'to' prop
+  to,
   type = 'button',
   download = false,
-  href = null, // Regular 'href' for <a> tags
+  href = null,
   icon = null,
   size = 'md'
 }) => {
-  // Enhanced base styles with better sizing options
   const baseStyles = "rounded-lg font-semibold transition-all flex items-center justify-center gap-2";
 
-  // Size variants
   const sizeStyles = {
     sm: 'px-4 py-2 text-sm',
     md: 'px-6 py-3 text-base',

@@ -1,13 +1,12 @@
 import React, { useEffect, useRef, useState, memo, useMemo } from 'react';
 import { motion, useAnimation, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { HiDownload, HiChevronDown, HiOutlineMail } from 'react-icons/hi';
+import { HiDownload, HiOutlineMail } from 'react-icons/hi';
 import { FiGithub, FiLinkedin, FiTwitter } from 'react-icons/fi';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import { Link } from 'react-router-dom';
 import Button from './Button'; // Assuming Button is a custom component
 import profileImage from '../assets/ghibli_profile.jpg';
 import resumeImage from '../assets/Ghanshyam_Hadiya.pdf';
 
-// Optimized SocialButton with memo to prevent unnecessary rerenders
 const SocialButton = memo(({ icon, href, color, bg }) => (
   <motion.a
     href={href}
@@ -22,16 +21,14 @@ const SocialButton = memo(({ icon, href, color, bg }) => (
   </motion.a>
 ));
 
-// Modern particle animation with reduced count
 const Particles = memo(() => {
-  // Keeping the particle count at 10 as per the newer version's optimization
   const particles = useMemo(() =>
-    Array.from({ length: 10 }).map((_, i) => ({ // Using Array.from for clarity
+    Array.from({ length: 10 }).map((_, i) => ({
       id: i,
       left: `${Math.random() * 100}%`,
       top: `${Math.random() * 100}%`,
       size: Math.random() * 2 + 1,
-      color: Math.random() > 0.5 ? 'rgba(99, 102, 241, 0.5)' : 'rgba(167, 139, 250, 0.5)',
+      color: Math.random() > 0.5 ? 'rgba(255, 204, 0, 0.5)' : 'rgba(255, 255, 255, 0.5)',
       duration: 3 + Math.random() * 5,
       delay: Math.random() * 3
     })), []
@@ -68,7 +65,6 @@ const Particles = memo(() => {
   );
 });
 
-// Modern text reveal animation to replace typewriter
 const ModernTextReveal = memo(({ jobTitles }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -76,17 +72,17 @@ const ModernTextReveal = memo(({ jobTitles }) => {
     const interval = setInterval(() => {
       setTimeout(() => {
         setCurrentIndex(prev => (prev + 1) % jobTitles.length);
-      }, 500); // Wait for exit animation to complete
+      }, 500);
     }, 3000);
 
     return () => clearInterval(interval);
   }, [jobTitles]);
 
   return (
-    <div className="text-indigo-400 relative h-12 flex items-center overflow-hidden">
+    <div className="text-yellow-400 relative h-12 flex items-center overflow-hidden">
       <AnimatePresence mode="wait">
         <motion.div
-          key={currentIndex} // Key forces re-render on index change
+          key={currentIndex}
           initial={{ y: 40, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -40, opacity: 0 }}
@@ -99,16 +95,15 @@ const ModernTextReveal = memo(({ jobTitles }) => {
   );
 });
 
-// Optimized ProfileImage with simplified animations and image loading
 const ProfileImage = memo(() => (
   <div className="relative w-64 h-64 sm:w-72 sm:h-72 lg:w-96 lg:h-96">
     <motion.div
-      className="absolute inset-0 rounded-3xl bg-gradient-to-br from-indigo-600/20 to-purple-600/20 backdrop-blur-md border border-indigo-500/30 shadow-xl shadow-indigo-500/10"
+      className="absolute inset-0 rounded-3xl bg-white/10 backdrop-blur-md border border-white/30 shadow-xl shadow-white/10"
       animate={{ rotate: [0, 0.5, 0, -0.5, 0] }}
       transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
     />
-    <div className="absolute inset-4 rounded-2xl overflow-hidden bg-gradient-to-br p-[2px] from-indigo-500 via-purple-500 to-indigo-500">
-      <div className="w-full h-full rounded-2xl overflow-hidden bg-gray-900 relative">
+    <div className="absolute inset-4 rounded-2xl overflow-hidden bg-gradient-to-br p-[2px] from-white via-yellow-400 to-white">
+      <div className="w-full h-full rounded-2xl overflow-hidden bg-gray-950 relative">
         <img
           src={profileImage}
           alt="Ghanshyam Hadiya"
@@ -116,12 +111,12 @@ const ProfileImage = memo(() => (
           loading="eager"
           fetchPriority="high"
         />
-        <div className="absolute inset-0 bg-gradient-to-tr from-indigo-900/30 to-transparent mix-blend-overlay" />
-        <div className="absolute top-0 left-[5%] right-[45%] h-[1px] bg-gradient-to-r from-transparent via-indigo-400/70 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-gray-900/30 to-transparent mix-blend-overlay" />
+        <div className="absolute top-0 left-[5%] right-[45%] h-[1px] bg-gradient-to-r from-transparent via-yellow-400/70 to-transparent" />
       </div>
     </div>
     <motion.div
-      className="absolute w-16 h-16 rounded-full bg-indigo-500/10 border border-indigo-500/20 z-[-1]"
+      className="absolute w-16 h-16 rounded-full bg-yellow-400/10 border border-yellow-400/20 z-[-1]"
       style={{ top: '-5%', right: '-2%' }}
       animate={{ y: [0, -4, 0], rotate: [0, 3, 0] }}
       transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
@@ -129,10 +124,9 @@ const ProfileImage = memo(() => (
   </div>
 ));
 
-// Glow background element for enhanced visuals
 const GlowBackground = memo(() => (
   <div className="absolute inset-0 overflow-hidden">
-    <div className="absolute top-1/4 left-1/4 w-1/2 h-1/2 rounded-full bg-indigo-600/10 filter blur-[100px]" />
+    <div className="absolute top-1/4 left-1/4 w-1/2 h-1/2 rounded-full bg-white/5 filter blur-[100px]" />
   </div>
 ));
 
@@ -144,7 +138,6 @@ const Hero = () => {
     offset: ["start start", "end start"]
   });
 
-  // Optimized scroll transformations
   const yBg = useTransform(scrollYProgress, [0, 1], [0, 100]);
   const opacitySection = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.97]);
@@ -166,9 +159,9 @@ const Hero = () => {
   ], []);
 
   const socialLinks = useMemo(() => [
-    { icon: <FiGithub size={20} />, href: "https://github.com/ghanshyamhadiya", color: "hover:text-indigo-400", bg: "hover:bg-indigo-900/50" },
-    { icon: <FiLinkedin size={20} />, href: "https://linkedin.com", color: "hover:text-blue-400", bg: "hover:bg-blue-900/50" },
-    { icon: <FiTwitter size={20} />, href: "https://twitter.com", color: "hover:text-sky-400", bg: "hover:bg-sky-900/50" }
+    { icon: <FiGithub size={20} />, href: "https://github.com/ghanshyamhadiya", color: "hover:text-yellow-400", bg: "hover:bg-gray-800" },
+    { icon: <FiLinkedin size={20} />, href: "https://linkedin.com", color: "hover:text-yellow-400", bg: "hover:bg-gray-800" },
+    { icon: <FiTwitter size={20} />, href: "https://twitter.com", color: "hover:text-yellow-400", bg: "hover:bg-gray-800" }
   ], []);
 
   useEffect(() => {
@@ -179,27 +172,14 @@ const Hero = () => {
     <section
       id="home"
       ref={containerRef}
-      className="min-h-screen flex items-center bg-gray-900 py-16 md:py-20 relative overflow-hidden"
+      className="min-h-screen flex items-center bg-gray-950 py-16 md:py-20 relative overflow-hidden"
     >
       <motion.div
-        className="absolute inset-0 bg-gradient-to-tr from-indigo-900/30 via-gray-900/50 to-purple-900/20"
+        className="absolute inset-0 bg-gradient-to-tr from-gray-900 via-gray-950 to-black"
         style={{ y: yBg }}
       />
 
-      {/* Enhanced background elements */}
       <GlowBackground />
-
-      <div className="absolute inset-0 overflow-hidden opacity-10">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `linear-gradient(rgba(99, 102, 241, 0.05) 1px, transparent 1px),
-                           linear-gradient(90deg, rgba(99, 102, 241, 0.05) 1px, transparent 1px)`,
-          backgroundSize: '60px 60px',
-          backgroundPosition: '-20px -20px',
-          transform: 'perspective(1000px) rotateX(60deg) translateY(-100px)',
-          transformOrigin: 'center center'
-        }} />
-      </div>
-
       <Particles />
 
       <motion.div
@@ -214,13 +194,13 @@ const Hero = () => {
             transition={{ duration: 0.5 }}
           >
             <motion.div
-              className="inline-block p-2 px-4 rounded-full bg-gradient-to-r from-indigo-900/30 to-purple-900/30 border border-indigo-500/20 backdrop-blur-sm mb-4 md:mb-6 mt-4"
+              className="inline-block p-2 px-4 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm mb-4 md:mb-6 mt-4"
               custom={0}
               variants={textVariants}
               initial="hidden"
               animate={controls}
             >
-              <span className="text-indigo-300 font-medium text-sm">Hello World, I'm</span>
+              <span className="text-yellow-400 font-medium text-sm">Hello World, I'm</span>
             </motion.div>
 
             <motion.h1
@@ -231,8 +211,7 @@ const Hero = () => {
               className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white mb-4 md:mb-6 leading-tight"
             >
               Ghanshyam <span className="inline-block relative">
-                <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-500 to-indigo-500">Hadiya</span>
-                <span className="absolute inset-0 bg-gradient-to-r from-indigo-500/15 via-purple-500/15 to-indigo-500/15 blur-lg -z-10 opacity-40"></span>
+                <span className="relative z-10 text-yellow-400">Hadiya</span>
               </span>
             </motion.h1>
 
@@ -241,7 +220,7 @@ const Hero = () => {
               variants={textVariants}
               initial="hidden"
               animate={controls}
-              className="text-xl sm:text-2xl lg:text-3xl font-semibold text-gray-200 mb-6 md:mb-8 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-2"
+              className="text-xl sm:text-2xl lg:text-3xl font-semibold text-white mb-6 md:mb-8 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-2"
             >
               <span>I'm a</span>
               <ModernTextReveal jobTitles={jobTitles} />
@@ -269,16 +248,15 @@ const Hero = () => {
               <Button
                 href={resumeImage}
                 download={true}
-                className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 px-5 py-3 rounded-full transition-all duration-200 transform hover:scale-[1.02] shadow-lg hover:shadow-indigo-500/30 text-sm md:text-base"
+                className="bg-yellow-400 text-gray-950 hover:bg-yellow-300 px-5 py-3 rounded-full transition-all duration-200 transform hover:scale-[1.02] shadow-lg hover:shadow-yellow-400/30 text-sm md:text-base"
               >
                 <HiDownload size={18} className="mr-2" /> Download Resume
               </Button>
-              {/* Changed 'href' to 'to' and passed component={Link} */}
               <Button
                 primary={false}
-                to="/contact" // Use 'to' prop for React Router Link
-                component={Link} // Pass Link component
-                className="border border-indigo-500/50 text-indigo-300 hover:bg-indigo-800/30 px-5 py-3 rounded-full transition-all duration-200 transform hover:scale-[1.02] text-sm md:text-base"
+                to="/contact"
+                component={Link}
+                className="border border-white/50 text-white hover:bg-white/10 px-5 py-3 rounded-full transition-all duration-200 transform hover:scale-[1.02] text-sm md:text-base"
               >
                 <HiOutlineMail size={18} className="mr-2" /> Contact Me
               </Button>
@@ -312,7 +290,6 @@ const Hero = () => {
             <ProfileImage />
           </motion.div>
         </div>
-
       </motion.div>
     </section>
   );
